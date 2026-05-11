@@ -5,17 +5,17 @@ function App() {
   const [chatText, setChatText] = useState("");
 
   return (
-    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+    <div style={{ padding: "2rem" }}>
       <h1>💬 SaveYourChats</h1>
 
-      <ChatImporter onChatLoaded={setChatText} />
+      <ChatImporter onFileLoaded={setChatText} />
 
-      <hr />
-
-      <h2>📄 Contenido del chat</h2>
-      <pre style={{ whiteSpace: "pre-wrap" }}>
-        {chatText}
-      </pre>
+      <div style={{ marginTop: "2rem" }}>
+        <h3>Contenido crudo</h3>
+        <pre style={{ whiteSpace: "pre-wrap" }}>
+          {chatText}
+        </pre>
+      </div>
     </div>
   );
 }
