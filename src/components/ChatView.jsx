@@ -1,14 +1,14 @@
-export default function ChatView({ messages, me }) {
+export default function ChatView({ messages, me, dark }) {
   return (
     <div style={styles.container}>
       {messages.map((m, i) => (
-        <MessageBubble key={i} message={m} me={me} />
+        <MessageBubble key={i} message={m} me={me} dark={dark} />
       ))}
     </div>
   );
 }
 
-function MessageBubble({ message, me }) {
+function MessageBubble({ message, me, dark }) {
   const isMine =
     message.sender?.trim().toLowerCase() === me?.trim().toLowerCase();
 
@@ -17,7 +17,10 @@ function MessageBubble({ message, me }) {
       style={{
         ...styles.bubble,
         alignSelf: isMine ? "flex-end" : "flex-start",
-        background: isMine ? "#e9f5ff" : "#f3f3f3",
+        background: isMine
+          ? dark ? "#1e3a5f" : "#e9f5ff"
+          : dark ? "#2a2a2a" : "#f3f3f3",
+        color: dark ? "#fff" : "#000",
       }}
     >
       <div style={styles.sender}>{message.sender}</div>
@@ -43,7 +46,6 @@ const styles = {
     maxWidth: "70%",
     padding: "10px 14px",
     borderRadius: "12px",
-    fontFamily: "sans-serif",
   },
 
   sender: {
