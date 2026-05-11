@@ -2,6 +2,7 @@ import { useState } from "react";
 import ChatImporter from "./components/ChatImporter";
 import { parseWhatsApp } from "./utils/parseWhatsApp";
 import ChatView from "./components/ChatView";
+import { mergeChats } from "./utils/mergeChats";
 
 function getMainSender(messages) {
   const count = {};
@@ -23,10 +24,14 @@ function App() {
 
   const handleFile = (text) => {
     const parsed = parseWhatsApp(text);
-    const mainSender = getMainSender(parsed);
+
+    // 🧠 nueva capa de limpieza real del chat
+    const merged = mergeChats(parsed);
+
+    const mainSender = getMainSender(merged);
 
     setMe(mainSender);
-    setMessages(parsed);
+    setMessages(merged);
   };
 
   return (
@@ -36,13 +41,24 @@ function App() {
         background: dark ? "#111" : "#fff",
         color: dark ? "#fff" : "#000",
         minHeight: "100vh",
+        transition: "all 0.2s ease",
       }}
     >
       <header style={{ textAlign: "center", padding: "20px" }}>
         <h1>💬 SaveYourChats</h1>
 
-        <button onClick={() => setDark(!dark)}>
-          {dark ? "☀️ Light" : "🌙 Dark"}
+        <button
+          onClick={() => setDark(!dark)}
+          style={{
+            padding: "8px 12px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            cursor: "pointer",
+            background: dark ? "#333" : "#eee",
+            color: dark ? "#fff" : "#000",
+          }}
+        >
+          {dark ? "☀️ Light Mode" : "🌙 Dark Mode"}
         </button>
       </header>
 
