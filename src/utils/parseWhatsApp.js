@@ -1,9 +1,9 @@
 export function parseWhatsApp(text) {
   const lines = text.split("\n");
-
   const messages = [];
 
-  const regex = /^(\d{1,2}\/\d{1,2}\/\d{2,4}),?\s(\d{1,2}:\d{2})\s-\s([^:]+):\s(.+)$/;
+  const regex =
+    /^(\d{1,2}\/\d{1,2}\/\d{2,4}),\s(\d{1,2}:\d{2})\s-\s([^:]+):\s(.+)$/;
 
   for (let line of lines) {
     const match = line.match(regex);
@@ -15,11 +15,13 @@ export function parseWhatsApp(text) {
         date,
         time,
         sender,
-        message,
+        text: message,
       });
-    } else if (messages.length > 0) {
-      // mensaje multilinea
-      messages[messages.length - 1].message += "\n" + line;
+    } else {
+      // 🔥 mensaje continuo (muy importante en WhatsApp)
+      if (messages.length > 0) {
+        messages[messages.length - 1].text += " " + line;
+      }
     }
   }
 
