@@ -1,15 +1,16 @@
-export default function ChatView({ messages }) {
+export default function ChatView({ messages, me }) {
   return (
     <div style={styles.container}>
       {messages.map((m, i) => (
-        <MessageBubble key={i} message={m} />
+        <MessageBubble key={i} message={m} me={me} />
       ))}
     </div>
   );
 }
 
-function MessageBubble({ message }) {
-  const isMine = message.sender.toLowerCase().includes("tú");
+function MessageBubble({ message, me }) {
+  const isMine =
+    message.sender?.trim().toLowerCase() === me?.trim().toLowerCase();
 
   return (
     <div
